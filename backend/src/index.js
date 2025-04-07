@@ -7,6 +7,7 @@ const socketIo = require('socket.io');
 
 // Import routes
 const userRoutes = require('./routes/user.routes');
+const categoryRoutes = require('./routes/category.routes');
 
 // Environment variables configuration
 dotenv.config();
@@ -36,6 +37,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/sohbet-uygulamasi', {
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
