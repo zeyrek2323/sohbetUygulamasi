@@ -9,7 +9,7 @@ const generateToken = (userId) => {
 // Register new user
 exports.register = async (req, res) => {
   try {
-    const { username, email, password, interests } = req.body;
+    const { username, email, password, interests, bio, location, birthDate, education } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
@@ -24,7 +24,11 @@ exports.register = async (req, res) => {
       username,
       email,
       password,
-      interests
+      interests,
+      bio,
+      location,
+      birthDate,
+      education
     });
 
     await user.save();
@@ -39,7 +43,11 @@ exports.register = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        interests: user.interests
+        interests: user.interests,
+        bio: user.bio,
+        location: user.location,
+        birthDate: user.birthDate,
+        education: user.education
       }
     });
   } catch (error) {
@@ -77,7 +85,11 @@ exports.login = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        interests: user.interests
+        interests: user.interests,
+        bio: user.bio,
+        location: user.location,
+        birthDate: user.birthDate,
+        education: user.education
       }
     });
   } catch (error) {
@@ -105,7 +117,16 @@ exports.getProfile = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const updates = req.body;
-    const allowedUpdates = ['username', 'email', 'interests', 'profilePicture'];
+    const allowedUpdates = [
+      'username', 
+      'email', 
+      'interests', 
+      'profilePicture',
+      'bio',
+      'location',
+      'birthDate',
+      'education'
+    ];
     
     // Filter out invalid updates
     const validUpdates = Object.keys(updates)

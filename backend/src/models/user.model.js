@@ -26,6 +26,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'default-avatar.png'
   },
+  bio: {
+    type: String,
+    maxlength: [500, 'Bio cannot be longer than 500 characters'],
+    default: ''
+  },
+  location: {
+    type: String,
+    default: ''
+  },
+  birthDate: {
+    type: Date,
+    default: null
+  },
+  education: {
+    type: String,
+    default: ''
+  },
   interests: [{
     type: String,
     enum: ['tarih', 'spor', 'bilim', 'teknoloji', 'sanat', 'müzik', 'edebiyat']
