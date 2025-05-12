@@ -1,36 +1,27 @@
 const User = require('../models/user.model');
-const jwt = require('jsonwebtoken');
-
-// Generate JWT Token
+const bcrypt = require('bcryptjs');
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+  // Basit bir örnek, JWT ile yapmak istersen ayrıca ayarlayabilirsin
+  return userId.toString();
 };
 
-// Register new user
 exports.register = async (req, res) => {
+  console.log('Register endpoint called. Body:', req.body);
   try {
-    const { username, email, password, interests, bio, location, birthDate, education } = req.body;
+    const { username, password } = req.body;
+    console.log('Register request:', req.body); // <-- EKLE
 
     // Check if user already exists
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await User.findOne({ username });
     if (existingUser) {
+      console.log('User already exists:', username); // <-- EKLE
       return res.status(400).json({
-        message: 'User already exists with this email or username'
+        message: 'User already exists with this username'
       });
     }
 
     // Create new user
-    const user = new User({
-      username,
-      email,
-      password,
-      interests,
-      bio,
-      location,
-      birthDate,
-      education
-    });
-
+    const user = new User({ username, password });
     await user.save();
 
     // Generate token
@@ -41,16 +32,11 @@ exports.register = async (req, res) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
-        email: user.email,
-        interests: user.interests,
-        bio: user.bio,
-        location: user.location,
-        birthDate: user.birthDate,
-        education: user.education
+        username: user.username
       }
     });
   } catch (error) {
+    console.error('Register error:', error); // <-- EKLE
     res.status(500).json({
       message: 'Error registering user',
       error: error.message
@@ -58,132 +44,47 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login user
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    // Find user
-    const user = await User.findOne({ email });
+    const { username, password } = req.body;
+    // Kullanıcıyı bul
+    const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid username or password' });
     }
-
-    // Check password
-    const isMatch = await user.comparePassword(password);
+    // Şifreyi karşılaştır
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid username or password' });
     }
-
-    // Generate token
+    // Token oluştur
     const token = generateToken(user._id);
-
     res.json({
       message: 'Login successful',
       token,
       user: {
         id: user._id,
-        username: user.username,
-        email: user.email,
-        interests: user.interests,
-        bio: user.bio,
-        location: user.location,
-        birthDate: user.birthDate,
-        education: user.education
+        username: user.username
       }
     });
   } catch (error) {
-    res.status(500).json({
-      message: 'Error logging in',
-      error: error.message
-    });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 };
 
-// Get user profile
-exports.getProfile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id).select('-password');
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error fetching profile',
-      error: error.message
-    });
-  }
+exports.getProfile = (req, res) => {
+  res.status(501).json({ message: 'Not implemented' });
 };
 
-// Update user profile
-exports.updateProfile = async (req, res) => {
-  try {
-    const updates = req.body;
-    const allowedUpdates = [
-      'username', 
-      'email', 
-      'interests', 
-      'profilePicture',
-      'bio',
-      'location',
-      'birthDate',
-      'education'
-    ];
-    
-    // Filter out invalid updates
-    const validUpdates = Object.keys(updates)
-      .filter(key => allowedUpdates.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = updates[key];
-        return obj;
-      }, {});
-
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      validUpdates,
-      { new: true, runValidators: true }
-    ).select('-password');
-
-    res.json({
-      message: 'Profile updated successfully',
-      user
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error updating profile',
-      error: error.message
-    });
-  }
+exports.updateProfile = (req, res) => {
+  res.status(501).json({ message: 'Not implemented' });
 };
 
-// Get user quiz scores
-exports.getQuizScores = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id).select('quizScores');
-    res.json(user.quizScores);
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error fetching quiz scores',
-      error: error.message
-    });
-  }
+exports.getQuizScores = (req, res) => {
+  res.status(501).json({ message: 'Not implemented' });
 };
 
-// Add quiz score
-exports.addQuizScore = async (req, res) => {
-  try {
-    const { category, score } = req.body;
-    
-    const user = await User.findById(req.user._id);
-    user.quizScores.push({ category, score });
-    await user.save();
-
-    res.json({
-      message: 'Quiz score added successfully',
-      quizScores: user.quizScores
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error adding quiz score',
-      error: error.message
-    });
-  }
-}; 
+exports.addQuizScore = (req, res) => {
+  res.status(501).json({ message: 'Not implemented' });
+};

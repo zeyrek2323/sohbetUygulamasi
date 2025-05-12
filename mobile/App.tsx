@@ -10,6 +10,8 @@ const CATEGORY_INFOS: { [key: string]: string } = {
   'Müzik': 'Müzik, sesin ritim, melodi ve armoniyle birleşerek oluşturduğu sanattır. Kültürlerin önemli bir parçasıdır.'
 };
 
+const BACKEND_URL = 'http://192.168.1.108:5000'; // Bilgisayarının IP adresini yazmalısın
+
 export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,33 +31,48 @@ export default function App() {
     }
   };
 
-  const handleLogin = () => {
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-      setIsLoggedIn(true);
-      setAppScreen('home');
-    } else {
-      alert('Kullanıcı adı veya şifre hatalı!');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username + '@mail.com', password })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setIsLoggedIn(true);
+        setAppScreen('home');
+      } else {
+        alert(data.message || 'Giriş başarısız!');
+      }
+    } catch (err) {
+      alert('Sunucuya bağlanılamadı');
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (username.trim() === '' || password.trim() === '') {
       alert('Kullanıcı adı ve şifre boş olamaz!');
       return;
     }
-    
-    const userExists = users.some(u => u.username === username);
-    if (userExists) {
-      alert('Bu kullanıcı adı zaten kullanılıyor!');
-      return;
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/users/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email: username + '@mail.com', password })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+        setShowRegister(false);
+        setUsername('');
+        setPassword('');
+      } else {
+        alert(data.message || 'Kayıt sırasında hata oluştu');
+      }
+    } catch (err) {
+      alert('Sunucuya bağlanılamadı');
     }
-
-    setUsers([...users, { username, password }]);
-    alert('Kayıt başarılı! Giriş yapabilirsiniz.');
-    setShowRegister(false);
-    setUsername('');
-    setPassword('');
   };
 
   // Giriş/Kayıt ekranı
