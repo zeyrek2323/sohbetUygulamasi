@@ -57,23 +57,21 @@ const App = () => {
     <Router>
       <div className="min-h-screen bg-gray-100">
         {user && (
-          <nav className="bg-white shadow-lg">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="flex justify-between h-16">
-                <div className="flex items-center">
-                  <Link to="/chat" className="text-xl font-bold text-gray-800">
-                    Chat App
-                  </Link>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-600">Welcome, {user.username}!</span>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Logout
-                  </button>
-                </div>
+          <nav style={{ background: 'linear-gradient(90deg, #8ec5fc 0%, #e0c3fc 100%)', boxShadow: '0 2px 8px rgba(44,62,80,0.08)', padding: 0 }}>
+            <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 64, padding: '0 32px' }}>
+              <Link to="/chat" style={{ textDecoration: 'none', fontSize: 28, fontWeight: 800, color: '#4b2e83', letterSpacing: 1 }}>
+                Chat App
+              </Link>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+                <span style={{ color: '#333', fontSize: 18, fontWeight: 600, background: '#fff', padding: '7px 18px', borderRadius: 16, boxShadow: '0 2px 8px rgba(44,62,80,0.06)' }}>
+                  👋 Hoş geldin, <b>{user.username}</b>
+                </span>
+                <button
+                  onClick={handleLogout}
+                  style={{ background: 'linear-gradient(90deg, #ff5858 0%, #f09819 100%)', color: '#fff', border: 'none', borderRadius: 16, padding: '10px 22px', fontWeight: 700, fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px rgba(255,88,88,0.08)', transition: 'background 0.2s' }}
+                >
+                  Çıkış Yap
+                </button>
               </div>
             </div>
           </nav>
