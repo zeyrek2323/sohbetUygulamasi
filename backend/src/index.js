@@ -3,24 +3,25 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const http = require('http');
-const socketIo = require('socket.io');
+const setupWebSocket = require('./websocket');
 
 // Import routes
 const userRoutes = require('./routes/user.routes');
 const categoryRoutes = require('./routes/category.routes');
+const questionRoutes = require('./routes/question.routes');
+const messageRoutes = require('./routes/message.routes');
+const quizRoutes = require('./routes/quiz.routes');
 
 // Environment variables configuration
+
 dotenv.config();
 
 // Express app initialization
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
-});
+
+// WebSocket sunucusunu kur
+setupWebSocket(server);
 
 // Middleware
 app.use(cors());
@@ -38,19 +39,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/sohbet-uygulamasi', {
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/questions', questionRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/quizzes', quizRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Sohbet Uygulamasi API' });
-});
-
-// Socket.IO connection handling
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
 });
 
 // Error handling middleware

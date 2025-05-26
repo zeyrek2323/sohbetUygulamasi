@@ -73,12 +73,40 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.getProfile = (req, res) => {
-  res.status(501).json({ message: 'Not implemented' });
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('username fullName avatar bio interests score achievements');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({
+      user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching profile', error: error.message });
+  }
 };
 
-exports.updateProfile = (req, res) => {
-  res.status(501).json({ message: 'Not implemented' });
+exports.updateProfile = async (req, res) => {
+  try {
+    const updates = {};
+    const allowedFields = ['fullName', 'avatar', 'bio', 'interests'];
+    allowedFields.forEach(field => {
+      if (req.body[field] !== undefined) {
+        updates[field] = req.body[field];
+      }
+    });
+    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true, select: 'username fullName avatar bio interests score achievements' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({
+      message: 'Profile updated successfully',
+      user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating profile', error: error.message });
+  }
 };
 
 exports.getQuizScores = (req, res) => {
@@ -87,4 +115,4 @@ exports.getQuizScores = (req, res) => {
 
 exports.addQuizScore = (req, res) => {
   res.status(501).json({ message: 'Not implemented' });
-};
+}; 

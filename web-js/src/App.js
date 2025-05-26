@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-ro
 import Login from './components/Login';
 import Register from './components/Register';
 import Chat from './components/Chat';
+import Profile from './components/Profile';
+import SoruCevap from './components/SoruCevap';
 
 const BACKEND_URL = 'http://localhost:5000';
 const App = () => {
@@ -20,6 +22,7 @@ const App = () => {
       const data = await response.json();
       if (response.ok) {
         setUser(data.user);
+        localStorage.setItem('token', data.token);
         return data;
       } else {
         throw new Error(data.message || 'Login failed');
@@ -50,6 +53,7 @@ const App = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setUser(null);
   };
 
@@ -66,6 +70,11 @@ const App = () => {
                 <span style={{ color: '#333', fontSize: 18, fontWeight: 600, background: '#fff', padding: '7px 18px', borderRadius: 16, boxShadow: '0 2px 8px rgba(44,62,80,0.06)' }}>
                   👋 Hoş geldin, <b>{user.username}</b>
                 </span>
+                <Link to="/profile" style={{ textDecoration: 'none' }}>
+                  <button style={{ background: 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)', color: '#fff', border: 'none', borderRadius: 16, padding: '10px 22px', fontWeight: 700, fontSize: 16, cursor: 'pointer', marginRight: 8 }}>
+                    Profilim
+                  </button>
+                </Link>
                 <button
                   onClick={handleLogout}
                   style={{ background: 'linear-gradient(90deg, #ff5858 0%, #f09819 100%)', color: '#fff', border: 'none', borderRadius: 16, padding: '10px 22px', fontWeight: 700, fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px rgba(255,88,88,0.08)', transition: 'background 0.2s' }}
@@ -81,10 +90,12 @@ const App = () => {
             <Route path="/login" element={user ? <Navigate to="/chat" replace /> : <Login onLogin={handleLogin} />} />
             <Route path="/register" element={user ? <Navigate to="/chat" replace /> : <Register onRegister={handleRegister} />} />
             <Route path="/chat" element={user ? <Chat username={user.username} /> : <Navigate to="/login" replace />} />
+            <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" replace />} />
+            <Route path="/tarih-soru-cevap" element={<SoruCevap kategori="Tarih" />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
           </Routes>
         </main>
-      </div>
+    </div>
     </Router>
   );
 };

@@ -27,26 +27,26 @@ const Login = ({ onLogin }) => {
       <div style={{ width: 350, background: '#fff', borderRadius: 18, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 32, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <h2 style={{ fontSize: 32, fontWeight: 700, marginBottom: 8, color: '#222', textAlign: 'center' }}>Hoş Geldiniz</h2>
         <p style={{ color: '#888', fontSize: 16, marginBottom: 28, textAlign: 'center' }}>Hesabınıza giriş yapın</p>
-        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-          <div style={{ marginBottom: 18 }}>
-            <label htmlFor="username" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#333' }}>Kullanıcı Adı</label>
+        <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ marginBottom: 18, width: '85%' }}>
+            <label htmlFor="username" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#333', textAlign: 'left' }}>Kullanıcı Adı</label>
             <input
               type="text"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1px solid #ddd', fontSize: 16, outline: 'none', background: '#fafbfc' }}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1px solid #ddd', fontSize: 16, outline: 'none', background: '#fafbfc', display: 'block', margin: '0 auto' }}
               required
             />
           </div>
-          <div style={{ marginBottom: 18 }}>
-            <label htmlFor="password" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#333' }}>Şifre</label>
+          <div style={{ marginBottom: 18, width: '85%' }}>
+            <label htmlFor="password" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#333', textAlign: 'left' }}>Şifre</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1px solid #ddd', fontSize: 16, outline: 'none', background: '#fafbfc' }}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1px solid #ddd', fontSize: 16, outline: 'none', background: '#fafbfc', display: 'block', margin: '0 auto' }}
               required
             />
           </div>
@@ -56,7 +56,7 @@ const Login = ({ onLogin }) => {
           <button
             type="submit"
             disabled={isLoading}
-            style={{ width: '100%', padding: '13px 0', borderRadius: 10, background: '#2196f3', color: '#fff', fontWeight: 700, fontSize: 17, border: 'none', marginBottom: 18, cursor: isLoading ? 'not-allowed' : 'pointer', boxShadow: '0 2px 8px rgba(33,150,243,0.08)', transition: 'background 0.2s' }}
+            style={{ width: '85%', padding: '13px 0', borderRadius: 10, background: '#2196f3', color: '#fff', fontWeight: 700, fontSize: 17, border: 'none', marginBottom: 18, cursor: isLoading ? 'not-allowed' : 'pointer', boxShadow: '0 2px 8px rgba(33,150,243,0.08)', transition: 'background 0.2s', margin: '0 auto' }}
           >
             {isLoading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
           </button>

@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters long']
   },
-  profilePicture: {
+  fullName: {
+    type: String,
+    default: ''
+  },
+  avatar: {
     type: String,
     default: 'default-avatar.png'
   },
@@ -38,6 +42,13 @@ const userSchema = new mongoose.Schema({
   interests: [{
     type: String,
     enum: ['tarih', 'spor', 'bilim', 'teknoloji', 'sanat', 'müzik', 'edebiyat']
+  }],
+  score: {
+    type: Number,
+    default: 0
+  },
+  achievements: [{
+    type: String
   }],
   quizScores: [{
     category: String,
