@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SafeAreaView, View, FlatList, Text, ScrollView, Image, ImageBackground, Platform, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native';
+import { SafeAreaView, View, FlatList, Text, ScrollView, Image, ImageBackground, Platform, KeyboardAvoidingView, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import { Provider as PaperProvider, Card, TextInput, Button, Title, Paragraph, Modal, Portal, Chip, Avatar, IconButton, List } from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,13 +15,13 @@ const CATEGORY_INFOS: { [key: string]: string } = {
 
 const getBaseUrl = () => {
   if (Platform.OS === 'android') {
-    return 'http://10.0.2.2:5000';
+    return 'http://192.168.165.109:5000';
   }
   return 'http://localhost:5000';
 };
 const getWsUrl = () => {
   if (Platform.OS === 'android') {
-    return 'ws://10.0.2.2:5000';
+    return 'ws://192.168.165.109:5000';
   }
   return 'ws://localhost:5000';
 };
@@ -69,6 +69,8 @@ export default function App() {
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [qaLoaded, setQaLoaded] = useState(false);
 
   const handleSend = () => {
     if (message.trim() !== '' && selectedCategory && ws.current) {
@@ -140,13 +142,16 @@ export default function App() {
       });
       const data = await response.json();
       if (response.ok) {
-        setMessages(prev => [{
-          user: username,
-          text: data.question,
-          category: selectedCategory || '',
-          answer: data.answer,
-          createdAt: data.createdAt
-        }, ...prev]);
+        setMessages(prev => [
+          ...prev,
+          {
+            user: username,
+            text: data.question,
+            category: selectedCategory || '',
+            answer: data.answer,
+            createdAt: data.createdAt
+          }
+        ]);
         setMessage('');
       } else {
         alert(data.message || 'Soru gönderilemedi');
@@ -158,7 +163,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (appScreen === 'qa' && selectedCategory) {
+    if (appScreen === 'qa' && selectedCategory && !qaLoaded) {
       fetch(`${BACKEND_URL}/api/questions?kategori=${selectedCategory}`)
         .then(res => res.json())
         .then((data: any[]) => {
@@ -171,7 +176,12 @@ export default function App() {
               createdAt: q.createdAt
             }))
           );
+          setQaLoaded(true);
         });
+    }
+    if (appScreen !== 'qa') {
+      setQaLoaded(false);
+      setMessages([]);
     }
   }, [appScreen, selectedCategory]);
 
@@ -338,104 +348,114 @@ export default function App() {
   if (appScreen === 'home') {
     return (
       <PaperProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f6fa' }}>
-          <Card style={{ margin: 24, borderRadius: 18, elevation: 6, backgroundColor: '#fff', padding: 0, overflow: 'hidden', flex: 1 }}>
-            <View style={{ alignItems: 'flex-start', padding: 8 }}>
-              <IconButton icon="arrow-left" size={28} onPress={() => {
-                setIsLoggedIn(false);
-                setUsername('');
-                setPassword('');
-                setMessage('');
-                setMessages([]);
-                setSelectedCategory(null);
-                setAppScreen('home');
-              }} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#e0c3fc' }}>
+          {/* Hamburger Menü Butonu */}
+          <View style={{ position: 'absolute', top: 36, left: 18, zIndex: 10 }}>
+            <IconButton
+              icon="menu"
+              size={36}
+              onPress={() => setShowCategoryModal(true)}
+              style={{ backgroundColor: '#fff', borderRadius: 18, elevation: 4 }}
+              iconColor="#4b2e83"
+            />
+          </View>
+          <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 32, minHeight: Dimensions.get('window').height }}>
+            {/* Tanıtım Kutusu */}
+            <View style={{
+              width: '92%',
+              backgroundColor: '#fff',
+              borderRadius: 22,
+              padding: 24,
+              marginTop: 60,
+              marginBottom: 28,
+              shadowColor: '#8ec5fc',
+              shadowOffset: { width: 0, height: 6 },
+              shadowOpacity: 0.15,
+              shadowRadius: 16,
+              elevation: 8,
+            }}>
+              <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#4b2e83', marginBottom: 10, textAlign: 'left' }}>Sohbet Uygulamasına Hoş Geldin!</Text>
+              <Text style={{ fontSize: 18, color: '#333', marginBottom: 18, fontWeight: '600', textAlign: 'left' }}>Bu platformda seni neler bekliyor?</Text>
+              <View style={{ gap: 12 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6 }}>
+                  <Text style={{ fontSize: 22, marginRight: 8 }}>🚀</Text>
+                  <Text style={{ fontSize: 16, color: '#222', flex: 1 }}><Text style={{ fontWeight: 'bold' }}>Yapay Zeka Destekli Mini Quiz:</Text> Çözdüğün testlerin analizini yapay zeka ile anında öğren, güçlü ve gelişime açık yönlerini keşfet!</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6 }}>
+                  <Text style={{ fontSize: 22, marginRight: 8 }}>🤖</Text>
+                  <Text style={{ fontSize: 16, color: '#222', flex: 1 }}><Text style={{ fontWeight: 'bold' }}>Akıllı Soru-Cevap:</Text> Sohbet sırasında sorduğun sorulara, yapay zeka tarafından hızlı ve doğru yanıtlar al!</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6 }}>
+                  <Text style={{ fontSize: 22, marginRight: 8 }}>💬</Text>
+                  <Text style={{ fontSize: 16, color: '#222', flex: 1 }}><Text style={{ fontWeight: 'bold' }}>Farklı Kategorilerde Sohbet:</Text> Tarih, Bilim, Spor, Teknoloji ve Müzik gibi ilgi alanlarında yeni insanlarla tanış, bilgi paylaş!</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6 }}>
+                  <Text style={{ fontSize: 22, marginRight: 8 }}>🏆</Text>
+                  <Text style={{ fontSize: 16, color: '#222', flex: 1 }}><Text style={{ fontWeight: 'bold' }}>Kendini Test Et:</Text> Her kategoride onlarca test ile bilgini sınayabilir, başarılarını arkadaşlarınla paylaşabilirsin!</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 0 }}>
+                  <Text style={{ fontSize: 22, marginRight: 8 }}>🌐</Text>
+                  <Text style={{ fontSize: 16, color: '#222', flex: 1 }}><Text style={{ fontWeight: 'bold' }}>Modern ve Kullanıcı Dostu Tasarım:</Text> Hem web hem mobilde kolay kullanım, hızlı erişim ve eğlenceli bir deneyim!</Text>
+                </View>
+              </View>
             </View>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-              <View style={{ alignItems: 'center', padding: 28, paddingBottom: 18 }}>
-                <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', position: 'absolute', left: 0, top: 0 }}>
-                  <IconButton icon="menu" size={32} onPress={() => setShowCategoryDrawer(true)} />
-                </View>
-                <Avatar.Icon size={72} icon="chat" style={{ backgroundColor: '#2196f3', marginBottom: 18 }} />
-                <Title style={{ textAlign: 'center', fontSize: 28, fontWeight: 'bold', color: '#222', marginBottom: 10 }}>Bilgi, Eğlence ve Sohbet Tek Yerde!</Title>
-                <Paragraph style={{ textAlign: 'center', color: '#1976d2', fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>Kategorini seç, hemen sohbete katıl.</Paragraph>
-                <Paragraph style={{ textAlign: 'center', color: '#888', fontSize: 16, marginBottom: 18 }}>Eğlen, öğren, paylaş! Farklı alanlarda insanlarla buluş, yeni bilgiler keşfet.</Paragraph>
-              </View>
-              {/* Alt Bölme */}
-              <View style={{ backgroundColor: '#f5f6fa', paddingVertical: 22, paddingHorizontal: 24, borderBottomLeftRadius: 18, borderBottomRightRadius: 18, borderTopWidth: 1, borderTopColor: '#e0e0e0' }}>
-                <Title style={{ fontSize: 20, color: '#1976d2', fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Neden Bu Uygulama?</Title>
-                <List.Item
-                  title="Gerçek Zamanlı Sohbet"
-                  description="Anında mesajlaş, aktif topluluklarla iletişimde kal."
-                  left={props => <List.Icon {...props} icon="message-flash" color="#2196f3" />}
-                />
-                <List.Item
-                  title="Farklı Kategoriler"
-                  description="İlgi alanına göre sohbet odası seç, yeni bilgiler edin."
-                  left={props => <List.Icon {...props} icon="shape" color="#1976d2" />}
-                />
-                <List.Item
-                  title="Güvenli ve Anonim"
-                  description="Kişisel bilgilerin korunur, güvenli bir ortamda sohbet et."
-                  left={props => <List.Icon {...props} icon="shield-check" color="#43a047" />}
-                />
-                <List.Item
-                  title="Kullanıcı Dostu Tasarım"
-                  description="Modern ve sade arayüz ile kolay kullanım."
-                  left={props => <List.Icon {...props} icon="cellphone" color="#ff9800" />}
-                />
-                <View style={{ alignItems: 'center', marginTop: 10 }}>
-                  <Button mode="text" onPress={() => setAboutVisible(true)} labelStyle={{ color: '#888', textDecorationLine: 'underline' }}>Hakkımızda</Button>
-                </View>
-              </View>
-            </ScrollView>
-          </Card>
+            {/* Nasıl Çalışır Kutusu */}
+            <View style={{
+              width: '92%',
+              backgroundColor: '#f3e8ff',
+              borderRadius: 18,
+              padding: 20,
+              marginBottom: 22,
+              shadowColor: '#8ec5fc',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.10,
+              shadowRadius: 10,
+              elevation: 5,
+            }}>
+              <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#7c3aed', marginBottom: 8 }}>Nasıl Çalışır?</Text>
+              <Text style={{ fontSize: 16, color: '#333', marginBottom: 6 }}>1. Kategori seç ve sohbet odasına katıl.</Text>
+              <Text style={{ fontSize: 16, color: '#333', marginBottom: 6 }}>2. Sohbet et, soru sor veya mini quiz çöz.</Text>
+              <Text style={{ fontSize: 16, color: '#333', marginBottom: 6 }}>3. Quiz sonuçlarını ve güçlü yönlerini anında öğren.</Text>
+              <Text style={{ fontSize: 16, color: '#333' }}>4. Eğlen, öğren, yeni insanlarla tanış!</Text>
+            </View>
+            {/* Hakkımızda Kutusu */}
+            <View style={{
+              width: '92%',
+              backgroundColor: '#fff',
+              borderRadius: 18,
+              padding: 20,
+              marginBottom: 32,
+              shadowColor: '#8ec5fc',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.10,
+              shadowRadius: 10,
+              elevation: 5,
+            }}>
+              <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4b2e83', marginBottom: 8 }}>Hakkımızda</Text>
+              <Text style={{ fontSize: 16, color: '#333' }}>
+                Sohbet Uygulaması, kullanıcıların farklı ilgi alanlarında sohbet edebileceği, yapay zeka destekli mini quizler çözebileceği ve akıllı soru-cevap sistemiyle bilgi paylaşabileceği modern bir platformdur. Amacımız, eğlenceli ve öğretici bir ortamda insanları bir araya getirmek ve teknolojinin gücünü herkes için erişilebilir kılmaktır.
+              </Text>
+            </View>
+          </ScrollView>
+          {/* Kategori Seçim Modalı */}
           <Portal>
-            <Modal visible={showCategoryDrawer} onDismiss={() => setShowCategoryDrawer(false)} contentContainerStyle={{ backgroundColor: '#fff', margin: 32, borderRadius: 18, padding: 24 }}>
-              <Title style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold', color: '#222', marginBottom: 16 }}>Kategori Seç</Title>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginBottom: 18 }}>
-                {CATEGORIES.map(cat => (
-                  <Card
-                    key={cat}
-                    style={{
-                      width: 120,
-                      margin: 8,
-                      borderRadius: 16,
-                      elevation: selectedCategory === cat ? 8 : 2,
-                      backgroundColor: selectedCategory === cat ? '#2196f3' : '#f5f6fa',
-                      alignItems: 'center',
-                      paddingVertical: 18,
-                    }}
-          onPress={() => {
-                      setSelectedCategory(cat);
-                      setShowCategoryDrawer(false);
-                      setAppScreen('categoryDetail');
-                    }}
-                  >
-                    <Avatar.Icon
-                      size={36}
-                      icon={CATEGORY_ICONS[cat]}
-                      color={selectedCategory === cat ? '#fff' : '#2196f3'}
-                      style={{ backgroundColor: selectedCategory === cat ? '#1976d2' : '#e3f2fd', marginBottom: 8 }}
-                    />
-                    <Paragraph style={{ color: selectedCategory === cat ? '#fff' : '#2196f3', fontWeight: 'bold', fontSize: 16 }}>{cat}</Paragraph>
-                  </Card>
-                ))}
-              </View>
-              <Button mode="contained" onPress={() => setShowCategoryDrawer(false)} style={{ borderRadius: 10, backgroundColor: '#e74c3c' }} labelStyle={{ color: '#fff', fontWeight: 'bold' }}>Kapat</Button>
-            </Modal>
-            <Modal visible={aboutVisible} onDismiss={() => setAboutVisible(false)} contentContainerStyle={{ backgroundColor: '#fff', margin: 32, borderRadius: 18, padding: 24 }}>
-              <Title style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold', color: '#222', marginBottom: 10 }}>Hakkımızda</Title>
-              <Paragraph style={{ textAlign: 'center', color: '#1976d2', fontSize: 16, marginBottom: 10 }}>
-                Sohbet Uygulaması, bilgi paylaşımı ve eğlenceli sohbetler için tasarlanmış modern bir platformdur. Amacımız, farklı ilgi alanlarına sahip insanları güvenli ve keyifli bir ortamda buluşturmak.
-              </Paragraph>
-              <Paragraph style={{ textAlign: 'center', color: '#555', fontSize: 15, marginBottom: 8 }}>
-                <Text style={{ fontWeight: 'bold' }}>Geliştirici:</Text> Doğukan Enes Zeyrek
-              </Paragraph>
-              <Paragraph style={{ textAlign: 'center', color: '#555', fontSize: 15, marginBottom: 18 }}>
-                <Text style={{ fontWeight: 'bold' }}>İletişim:</Text> zeyrekdogukan@gmail.com
-              </Paragraph>
-              <Button mode="contained" onPress={() => setAboutVisible(false)} style={{ borderRadius: 10, backgroundColor: '#2196f3"', marginTop: 8 }} labelStyle={{ color: '#fff', fontWeight: 'bold' }}>Kapat</Button>
+            <Modal visible={showCategoryModal} onDismiss={() => setShowCategoryModal(false)} contentContainerStyle={{ backgroundColor: '#fff', margin: 24, borderRadius: 18, padding: 24, alignItems: 'center' }}>
+              <Title style={{ fontSize: 24, color: '#4b2e83', marginBottom: 18 }}>Kategori Seç</Title>
+              {CATEGORIES.map(cat => (
+                <Button
+                  key={cat}
+                  mode="contained"
+                  onPress={() => {
+                    setSelectedCategory(cat);
+                    setAppScreen('categoryDetail');
+                    setShowCategoryModal(false);
+                  }}
+                  style={{ width: 220, marginVertical: 8, borderRadius: 14, backgroundColor: '#2196f3', elevation: 2 }}
+                  labelStyle={{ color: '#fff', fontWeight: 'bold', fontSize: 20 }}
+                >
+                  {cat}
+                </Button>
+              ))}
             </Modal>
           </Portal>
         </SafeAreaView>
@@ -502,102 +522,92 @@ export default function App() {
       <PaperProvider>
         <ImageBackground source={require('./assets/chat-bg.png')} style={{ flex: 1 }} imageStyle={{ opacity: 0.4 }}>
           <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1, margin: 18, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.35)', padding: 0, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.10, shadowRadius: 12, elevation: 8 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#2196f3', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 14 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <IconButton icon={CATEGORY_ICONS[selectedCategory || 'Tarih']} iconColor="#fff" size={28} />
-                  <Title style={{ color: '#fff', fontSize: 20, fontWeight: 'bold', marginLeft: 4 }}>{selectedCategory ? selectedCategory + ' Sohbeti' : 'Sohbet Odası'}</Title>
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}
+            >
+              <View style={{ flex: 1, margin: 18, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.35)', padding: 0, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.10, shadowRadius: 12, elevation: 8 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#2196f3', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 14 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <IconButton icon={CATEGORY_ICONS[selectedCategory || 'Tarih']} iconColor="#fff" size={28} />
+                    <Title style={{ color: '#fff', fontSize: 20, fontWeight: 'bold', marginLeft: 4 }}>{selectedCategory ? selectedCategory + ' Sohbeti' : 'Sohbet Odası'}</Title>
+                  </View>
+                  <IconButton icon="arrow-left" iconColor="#fff" size={24} onPress={() => setAppScreen('categoryDetail')} />
                 </View>
-                <IconButton icon="logout" iconColor="#fff" size={24} onPress={() => {
-                  setIsLoggedIn(false);
-                  setUsername('');
-                  setPassword('');
-                  setMessage('');
-                  setMessages([]);
-                  setSelectedCategory(null);
-                  setAppScreen('home');
-                }} />
-              </View>
-      <FlatList
-                ref={flatListRef}
-                data={messages.filter(m => m.category === selectedCategory)}
-        keyExtractor={(_, i) => i.toString()}
-                contentContainerStyle={{ padding: 18, paddingBottom: 30 }}
-                renderItem={({ item }) => {
-                  const isMe = item.user === username;
-                  return (
-                    <View style={{ flexDirection: isMe ? 'row-reverse' : 'row', alignItems: 'flex-end', marginBottom: 14 }}>
-                      <Avatar.Text
-                        size={32}
-                        label={item.user[0].toUpperCase()}
-                        style={{ backgroundColor: isMe ? '#2196f3' : '#bdbdbd', marginHorizontal: 6, elevation: 2 }}
-                        color="#fff"
-                      />
-                      <View style={{ maxWidth: '75%', minWidth: 80 }}>
-                        <View style={{
-                          backgroundColor: isMe ? '#2196f3' : 'rgba(255,255,255,0.85)',
-                          borderRadius: 18,
-                          paddingVertical: 10,
-                          paddingHorizontal: 16,
-                          marginBottom: 2,
-                          shadowColor: isMe ? '#2196f3' : '#000',
-                          shadowOffset: { width: 0, height: 2 },
-                          shadowOpacity: isMe ? 0.10 : 0.08,
-                          shadowRadius: 6,
-                          elevation: 3,
-                          borderTopRightRadius: isMe ? 6 : 18,
-                          borderTopLeftRadius: isMe ? 18 : 6,
-                        }}>
-                          <Text style={{ color: isMe ? '#fff' : '#1976d2', fontWeight: 'bold', fontSize: 13, opacity: 0.7, marginBottom: 2 }}>{item.user}</Text>
-                          <Text style={{ color: isMe ? '#fff' : '#222', fontSize: 16 }}>{item.text}</Text>
+                <FlatList
+                  ref={flatListRef}
+                  data={messages.filter(m => m.category === selectedCategory)}
+                  keyExtractor={(_, i) => i.toString()}
+                  contentContainerStyle={{ padding: 18, paddingBottom: 30 }}
+                  renderItem={({ item }) => {
+                    const isMe = item.user === username;
+                    return (
+                      <View style={{ flexDirection: isMe ? 'row-reverse' : 'row', alignItems: 'flex-end', marginBottom: 14 }}>
+                        <Avatar.Text
+                          size={32}
+                          label={item.user[0].toUpperCase()}
+                          style={{ backgroundColor: isMe ? '#2196f3' : '#bdbdbd', marginHorizontal: 6, elevation: 2 }}
+                          color="#fff"
+                        />
+                        <View style={{ maxWidth: '75%', minWidth: 80 }}>
+                          <View style={{
+                            backgroundColor: isMe ? '#2196f3' : 'rgba(255,255,255,0.85)',
+                            borderRadius: 18,
+                            paddingVertical: 10,
+                            paddingHorizontal: 16,
+                            marginBottom: 2,
+                            shadowColor: isMe ? '#2196f3' : '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: isMe ? 0.10 : 0.08,
+                            shadowRadius: 6,
+                            elevation: 3,
+                            borderTopRightRadius: isMe ? 6 : 18,
+                            borderTopLeftRadius: isMe ? 18 : 6,
+                          }}>
+                            <Text style={{ color: isMe ? '#fff' : '#1976d2', fontWeight: 'bold', fontSize: 13, opacity: 0.7, marginBottom: 2 }}>{item.user}</Text>
+                            <Text style={{ color: isMe ? '#fff' : '#222', fontSize: 16 }}>{item.text}</Text>
+                          </View>
+                          <Text style={{ color: '#888', fontSize: 12, alignSelf: isMe ? 'flex-end' : 'flex-start', marginHorizontal: 6, marginTop: 2 }}>
+                            {item.timestamp ? moment(item.timestamp).format('HH:mm') : ''}
+                          </Text>
                         </View>
-                        <Text style={{ color: '#888', fontSize: 12, alignSelf: isMe ? 'flex-end' : 'flex-start', marginHorizontal: 6, marginTop: 2 }}>
-                          {item.timestamp ? moment(item.timestamp).format('HH:mm') : ''}
-                        </Text>
                       </View>
-          </View>
-                  );
-                }}
-                onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-                onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
-              />
-              {isTyping && (
-                <Text style={{ color: '#2196f3', fontStyle: 'italic', marginLeft: 24, marginBottom: 4 }}>Birisi yazıyor...</Text>
-              )}
-              <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', margin: 14, backgroundColor: 'rgba(255,255,255,0.85)', borderRadius: 18, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 }}>
-                  <TextInput
-                    placeholder="Mesajınızı yazın..."
-                    value={message}
-                    onChangeText={text => { setMessage(text); handleTyping(); }}
-                    mode="flat"
-                    style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 18, marginRight: 8, fontSize: 16 }}
-                    underlineColor="transparent"
-                    selectionColor="#2196f3"
-                    theme={{ colors: { text: '#222', placeholder: '#888' } }}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="default"
-                  />
-                  <Button
-                    mode="contained"
-                    onPress={handleSend}
-                    style={{ borderRadius: 18, backgroundColor: '#2196f3', paddingVertical: 4, minWidth: 80 }}
-                    labelStyle={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}
-                  >
-                    Gönder
-                  </Button>
-                </View>
-              </KeyboardAvoidingView>
-              <Button
-                mode="outlined"
-                onPress={() => setAppScreen('home')}
-                style={{ borderRadius: 10, marginHorizontal: 18, marginBottom: 12, borderColor: '#2196f3' }}
-                labelStyle={{ color: '#2196f3', fontWeight: 'bold', fontSize: 15 }}
-              >
-                ← Kategorilere Dön
-              </Button>
-            </View>
+                    );
+                  }}
+                  onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+                  onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
+                />
+                {isTyping && (
+                  <Text style={{ color: '#2196f3', fontStyle: 'italic', marginLeft: 24, marginBottom: 4 }}>Birisi yazıyor...</Text>
+                )}
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', margin: 14, backgroundColor: 'rgba(255,255,255,0.85)', borderRadius: 18, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 }}>
+                    <TextInput
+                      placeholder="Mesajınızı yazın..."
+                      value={message}
+                      onChangeText={text => { setMessage(text); handleTyping(); }}
+                      mode="flat"
+                      style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 18, marginRight: 8, fontSize: 16 }}
+                      underlineColor="transparent"
+                      selectionColor="#2196f3"
+                      theme={{ colors: { text: '#222', placeholder: '#888' } }}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType="default"
+                    />
+                    <Button
+                      mode="contained"
+                      onPress={handleSend}
+                      style={{ borderRadius: 18, backgroundColor: '#2196f3', paddingVertical: 4, minWidth: 80 }}
+                      labelStyle={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}
+                    >
+                      Gönder
+                    </Button>
+                  </View>
+                </KeyboardAvoidingView>
+              </View>
+            </KeyboardAvoidingView>
           </SafeAreaView>
         </ImageBackground>
       </PaperProvider>
@@ -626,12 +636,12 @@ export default function App() {
     return (
       <PaperProvider>
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f6fa' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: color + '11', padding: 18, paddingTop: 36, borderBottomLeftRadius: 18, borderBottomRightRadius: 18, marginBottom: 8, shadowColor: color, shadowOpacity: 0.1, shadowRadius: 8, elevation: 2 }}>
-            <Avatar.Icon icon={icon} size={40} style={{ backgroundColor: color, marginRight: 10 }} />
-            <Title style={{ fontSize: 24, fontWeight: 'bold', color: '#222', letterSpacing: 1 }}>{selectedCategory || 'Soru-Cevap'} Soru-Cevap</Title>
-            <IconButton icon="arrow-left" iconColor="#222" size={24} style={{ marginLeft: 'auto' }} onPress={() => setAppScreen('categoryDetail')} />
-          </View>
-          <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: color + '11', padding: 18, paddingTop: 36, borderBottomLeftRadius: 18, borderBottomRightRadius: 18, marginBottom: 8, shadowColor: color, shadowOpacity: 0.1, shadowRadius: 8, elevation: 2 }}>
+              <Avatar.Icon icon={icon} size={40} style={{ backgroundColor: color, marginRight: 10 }} />
+              <Title style={{ fontSize: 24, fontWeight: 'bold', color: '#222', letterSpacing: 1 }}>{selectedCategory || 'Soru-Cevap'} Soru-Cevap</Title>
+              <IconButton icon="arrow-left" iconColor="#222" size={24} style={{ marginLeft: 'auto' }} onPress={() => setAppScreen('categoryDetail')} />
+            </View>
             <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end', padding: 18 }} keyboardShouldPersistTaps="handled">
               {messages
                 .filter(m => m.category === selectedCategory)
@@ -657,10 +667,10 @@ export default function App() {
                 ))}
             </ScrollView>
             <View style={{ padding: 18, backgroundColor: '#fff', borderTopLeftRadius: 18, borderTopRightRadius: 18, elevation: 8 }}>
-        <TextInput
+              <TextInput
                 placeholder="Sorunuzu yazın..."
-          value={message}
-          onChangeText={setMessage}
+                value={message}
+                onChangeText={setMessage}
                 mode="outlined"
                 style={{ marginBottom: 10, backgroundColor: '#fff', fontSize: 18 }}
                 outlineColor={color}

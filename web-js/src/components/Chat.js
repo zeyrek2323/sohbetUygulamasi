@@ -242,10 +242,99 @@ function Chat({ username }) {
 
   if (!selectedCategory) {
     return (
-      <div style={{ maxWidth: 700, margin: '40px auto', padding: 32, borderRadius: 24, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)', boxShadow: '0 8px 32px rgba(44,62,80,0.08)' }}>
-        <h1 style={{ fontSize: 40, fontWeight: 800, color: '#222', marginBottom: 10, textAlign: 'center', letterSpacing: 1 }}>Hoş Geldin{username ? `, ${username}` : ''}!</h1>
-        <p style={{ color: '#555', fontSize: 20, textAlign: 'center', marginBottom: 36 }}>Bir kategori seçerek sohbete katılabilirsin:</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 28, justifyContent: 'center' }}>
+      <div style={{
+        maxWidth: 1400,
+        margin: '40px auto',
+        padding: '0 8px',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 64,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+      }}>
+        {/* Tanıtım Kutusu */}
+        <div style={{
+          background: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)',
+          borderRadius: 24,
+          boxShadow: '0 8px 32px rgba(44,62,80,0.10)',
+          padding: '48px 40px 40px 40px',
+          minWidth: 420,
+          maxWidth: 600,
+          flex: '1 1 480px',
+          textAlign: 'left',
+          color: '#222',
+        }}>
+          <h1 style={{ fontSize: 36, fontWeight: 900, marginBottom: 18, letterSpacing: 1, color: '#4b2e83', textAlign: 'left' }}>Sohbet Uygulamasına Hoş Geldin!</h1>
+          <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 18, color: '#333', textAlign: 'left' }}>
+            Bu platformda seni neler bekliyor?
+          </div>
+          <ul style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 18,
+            fontSize: 18,
+            fontWeight: 500,
+          }}>
+            <li style={{ background: '#fff', borderRadius: 14, padding: '16px 22px', boxShadow: '0 2px 8px #e3e3e3', borderLeft: '6px solid #43cea2', textAlign: 'left' }}>
+              🚀 <b>Yapay Zeka Destekli Mini Quiz:</b> Çözdüğün testlerin analizini yapay zeka ile anında öğren, güçlü ve gelişime açık yönlerini keşfet!
+            </li>
+            <li style={{ background: '#fff', borderRadius: 14, padding: '16px 22px', boxShadow: '0 2px 8px #e3e3e3', borderLeft: '6px solid #8e44ad', textAlign: 'left' }}>
+              🤖 <b>Akıllı Soru-Cevap:</b> Sohbet sırasında sorduğun sorulara, yapay zeka tarafından hızlı ve doğru yanıtlar al!
+            </li>
+            <li style={{ background: '#fff', borderRadius: 14, padding: '16px 22px', boxShadow: '0 2px 8px #e3e3e3', borderLeft: '6px solid #f39c12', textAlign: 'left' }}>
+              💬 <b>Farklı Kategorilerde Sohbet:</b> Tarih, Bilim, Spor, Teknoloji ve Müzik gibi ilgi alanlarında yeni insanlarla tanış, bilgi paylaş!
+            </li>
+            <li style={{ background: '#fff', borderRadius: 14, padding: '16px 22px', boxShadow: '0 2px 8px #e3e3e3', borderLeft: '6px solid #2980b9', textAlign: 'left' }}>
+              🏆 <b>Kendini Test Et:</b> Her kategoride onlarca test ile bilgini sınayabilir, başarılarını arkadaşlarınla paylaşabilirsin!
+            </li>
+            <li style={{ background: '#fff', borderRadius: 14, padding: '16px 22px', boxShadow: '0 2px 8px #e3e3e3', borderLeft: '6px solid #e74c3c', textAlign: 'left' }}>
+              🌐 <b>Modern ve Kullanıcı Dostu Tasarım:</b> Hem web hem mobilde kolay kullanım, hızlı erişim ve eğlenceli bir deneyim!
+            </li>
+          </ul>
+
+          {/* Nasıl Çalışır Kutusu */}
+          <div style={{
+            marginTop: 40,
+            background: 'linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%)',
+            borderRadius: 18,
+            boxShadow: '0 4px 16px rgba(44,62,80,0.08)',
+            padding: '28px 24px 24px 24px',
+            color: '#222',
+          }}>
+            <h2 style={{ fontSize: 26, fontWeight: 800, marginBottom: 18, color: '#4b2e83', letterSpacing: 1 }}>Nasıl Çalışır?</h2>
+            <ol style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+              fontSize: 18,
+              fontWeight: 500,
+            }}>
+              <li><span style={{fontSize: 22, marginRight: 10}}>📂</span><b>Kategori Seç:</b> İlgi alanına göre bir sohbet kategorisi seç.</li>
+              <li><span style={{fontSize: 22, marginRight: 10}}>💬</span><b>Sohbete Katıl:</b> Diğer kullanıcılarla anında sohbet etmeye başla.</li>
+              <li><span style={{fontSize: 22, marginRight: 10}}>📝</span><b>Mini Quiz Çöz:</b> Kategorideki Mini Quiz'leri çöz, yapay zeka analizini gör.</li>
+              <li><span style={{fontSize: 22, marginRight: 10}}>🤖</span><b>Soru Sor:</b> Soru-Cevap bölümünde yapay zekaya istediğini sor.</li>
+              <li><span style={{fontSize: 22, marginRight: 10}}>👤</span><b>Profilini Takip Et:</b> Başarılarını ve gelişimini profilinden izle.</li>
+            </ol>
+          </div>
+        </div>
+        {/* Kategori Kartları */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 36,
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          marginTop: 0,
+          marginBottom: 0,
+          minWidth: 260,
+          flex: '0 1 320px',
+        }}>
           {CATEGORIES.map(cat => (
             <div
               key={cat.name}
@@ -256,24 +345,24 @@ function Chat({ username }) {
                 color: '#fff',
                 borderRadius: 18,
                 boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                width: 180,
-                minHeight: 170,
+                width: 260,
+                minHeight: 190,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: 22,
+                fontSize: 24,
                 fontWeight: 700,
                 transition: 'transform 0.15s',
                 userSelect: 'none',
-                padding: 18,
+                padding: 24,
               }}
               onMouseOver={e => e.currentTarget.style.transform = 'scale(1.04)'}
               onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
             >
-              <span style={{ fontSize: 48, marginBottom: 12 }}>{cat.icon}</span>
+              <span style={{ fontSize: 54, marginBottom: 16 }}>{cat.icon}</span>
               {cat.name}
-              <div style={{ fontWeight: 400, fontSize: 14, marginTop: 10, opacity: 0.9, textAlign: 'center' }}>{CATEGORY_INFOS[cat.name]}</div>
+              <div style={{ fontWeight: 400, fontSize: 16, marginTop: 14, opacity: 0.9, textAlign: 'center' }}>{CATEGORY_INFOS[cat.name]}</div>
             </div>
           ))}
         </div>
@@ -364,407 +453,559 @@ function Chat({ username }) {
         { title: "Tarkan ve Türk Pop Müziğinin Uluslararası Yükselişi (1990'lar)", desc: "Tarkan'ın 'Şımarık' gibi hitleriyle Avrupa'da da liste başı olması, Türk pop müziğinin sınırları aşabileceğini gösterdi. Aynı dönemde pop müzik Türkiye'de altın çağını yaşadı. Bu dönem, müziğin kitleselleşmesini ve globalleşmesini sağladı." }
       ]
     };
+
+    // Her kategoriye özel haber ve bilgiler
+    const CATEGORY_NEWS = {
+      'Tarih': {
+        news: [
+          { title: "Osmanlı Arşivleri Dijitalleşiyor", desc: "Osmanlı dönemine ait milyonlarca belge dijital ortama aktarılıyor." },
+          { title: "Göbeklitepe'de Yeni Kazılar", desc: "Dünyanın en eski tapınağında yeni bulgular ortaya çıktı." },
+          { title: "Tarihi Eser Kaçakçılığına Büyük Operasyon", desc: "Yurtdışına kaçırılmak istenen 500'den fazla eser ele geçirildi." },
+          { title: "UNESCO'ya Yeni Türk Kültür Mirası", desc: "Bir Osmanlı köyü UNESCO Dünya Mirası Listesi'ne girdi." },
+          { title: "Tarihi Yarımada'da Restorasyon", desc: "İstanbul'daki birçok tarihi yapı restore edilerek ziyarete açıldı." },
+        ],
+        facts: [
+          { fact: "Mısır piramitleri inşa edilirken henüz mamutlar yaşıyordu." },
+          { fact: "Kleopatra, piramitlerin inşasından daha yakın bir dönemde yaşadı bize." },
+          { fact: "Orta Çağ'da domates Avrupa'da zehirli sanılıyordu." },
+          { fact: "Vikingler bıyıklarını ve saçlarını boyardı." },
+          { fact: "Tarihteki en kısa savaş 38 dakika sürdü (İngiltere-Zanzibar, 1896)." },
+        ]
+      },
+      'Bilim': {
+        news: [
+          { title: "James Webb Teleskobu Yeni Galaksi Keşfetti", desc: "NASA'nın uzay teleskobu, evrenin en uzak galaksilerinden birini görüntüledi." },
+          { title: "Türkiye'de İlk Yerli Elektrikli Araç Bataryası", desc: "Yerli üretim batarya ile elektrikli araçlarda yeni dönem başlıyor." },
+          { title: "Mars'ta Su İzleri", desc: "Bilim insanları Mars'ta yeni su izleri buldu." },
+          { title: "Yapay Zeka ile Kanser Teşhisi", desc: "Yapay zeka destekli sistemler, kanser teşhisinde doğruluğu artırıyor." },
+          { title: "Küresel Isınma Raporu Yayınlandı", desc: "Son 10 yıl, kayıtlardaki en sıcak dönem oldu." },
+        ],
+        facts: [
+          { fact: "Bir insanın DNA'sı %60 oranında muz ile aynıdır." },
+          { fact: "Bir yıldırım, 30.000°C'ye kadar ısınabilir." },
+          { fact: "Dünyadaki en büyük canlı, dev bir mantar kolonisi (Oregon, ABD)." },
+          { fact: "Karıncalar asla uyumaz." },
+          { fact: "Bir kağıt parçası 42 kez katlanırsa Ay'a ulaşacak kadar kalın olurdu." },
+        ]
+      },
+      'Spor': {
+        news: [
+          { title: "Olimpiyatlarda Türk Sporcular Tarih Yazdı", desc: "Milli sporcularımız Tokyo 2020'de rekor madalya kazandı." },
+          { title: "VAR Sistemi Süper Lig'de", desc: "Video Yardımcı Hakem uygulaması ile tartışmalı pozisyonlar azalıyor." },
+          { title: "Kadın Futbolunda Büyük Yükseliş", desc: "Türkiye Kadın Futbol Ligi'nde yeni rekorlar kırıldı." },
+          { title: "NBA'de Playoff Heyecanı", desc: "NBA'de sezonun en çekişmeli playoffları yaşanıyor." },
+          { title: "Bisiklet Turu Başladı", desc: "Türkiye Bisiklet Turu'nda sporcular kıyasıya yarışıyor." },
+        ],
+        facts: [
+          { fact: "Dünyanın en hızlı golü 2.8 saniyede atıldı." },
+          { fact: "Bir futbol topunun ömrü ortalama 3 yıldır." },
+          { fact: "Basketbol ilk icat edildiğinde sepetlerin dibi kapalıydı." },
+          { fact: "Bir maratonun uzunluğu 42.195 metredir." },
+          { fact: "Dünyanın en eski spor dalı güreştir." },
+        ]
+      },
+      'Teknoloji': {
+        news: [
+          { title: "Türkiye'nin İlk Yerli Elektrikli Otomobili Yollarda", desc: "TOGG, seri üretime geçerek satışa sunuldu." },
+          { title: "5G Dönemi Başladı", desc: "Türkiye'de ilk 5G denemeleri başarıyla tamamlandı." },
+          { title: "Yerli Yazılım İhracatı Rekor Kırdı", desc: "Türk yazılım firmaları dünya pazarında büyüyor." },
+          { title: "Yapay Zeka ile Akıllı Evler", desc: "Ev otomasyonunda yapay zeka kullanımı artıyor." },
+          { title: "Uzayda Türk Uydusu", desc: "Yeni nesil haberleşme uydusu başarıyla fırlatıldı." },
+        ],
+        facts: [
+          { fact: "İlk bilgisayar bir oda büyüklüğündeydi." },
+          { fact: "Dünyada her gün 300 milyar e-posta gönderiliyor." },
+          { fact: "Bir akıllı telefonun ortalama 30 farklı metal içerir." },
+          { fact: "İlk SMS 1992'de gönderildi." },
+          { fact: "Dünyanın ilk web sitesi bugün hâlâ yayında." },
+        ]
+      },
+      'Müzik': {
+        news: [
+          { title: "Türk Sanat Müziği Gecesi", desc: "İstanbul'da ünlü sanatçılar klasik eserleri seslendirdi." },
+          { title: "Dijital Müzik Platformlarında Rekor", desc: "Türk sanatçıların şarkıları milyonlarca kez dinlendi." },
+          { title: "Yeni Albüm Çıktı", desc: "Popüler bir grup yeni albümünü yayınladı." },
+          { title: "Müzik Festivali Başladı", desc: "Gençler için büyük bir açık hava festivali düzenleniyor." },
+          { title: "Müzik ve Yapay Zeka", desc: "Yapay zeka ile bestelenen ilk Türkçe şarkı yayınlandı." },
+        ],
+        facts: [
+          { fact: "Dünyadaki en uzun şarkı 13 saat 23 dakika sürüyor." },
+          { fact: "Bir gitar telinin ömrü ortalama 100 saat çalmadır." },
+          { fact: "Mozart 5 yaşında beste yapmaya başladı." },
+          { fact: "En çok çalınan enstrüman piyanodur." },
+          { fact: "Bir insanın sesi 1 kilometreye kadar duyulabilir." },
+        ]
+      },
+    };
+    const guncelHaberler = CATEGORY_NEWS[selectedCategory.name]?.news || [];
+    const eglenceliBilgiler = CATEGORY_NEWS[selectedCategory.name]?.facts || [];
+
     return (
-      <div style={{ maxWidth: 700, margin: '40px auto', padding: 32, borderRadius: 24, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)', boxShadow: '0 8px 32px rgba(44,62,80,0.08)' }}>
-        <button onClick={() => setSelectedCategory(null)} style={{ marginBottom: 24, padding: '8px 18px', borderRadius: 8, border: 'none', background: '#eee', cursor: 'pointer', fontWeight: 600, fontSize: 16 }}>← Kategoriler</button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 18 }}>
-          <span style={{ fontSize: 38 }}>{selectedCategory.icon}</span>
-          <span style={{ fontWeight: 800, fontSize: 32, color: selectedCategory.color }}>{selectedCategory.name}</span>
+      <div style={{
+        maxWidth: 1400,
+        margin: '40px auto',
+        padding: '0 8px',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 64,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+      }}>
+        {/* Sol: Güncel Haberler */}
+        <div style={{
+          width: 260,
+          minWidth: 200,
+          maxHeight: 520,
+          background: 'linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%)',
+          borderRadius: 18,
+          boxShadow: '0 4px 16px rgba(44,62,80,0.08)',
+          padding: '22px 18px',
+          overflowY: 'auto',
+          color: '#333',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 18,
+          marginLeft: 0,
+          marginRight: 0,
+          marginTop: 0,
+          marginBottom: 0,
+          alignSelf: 'flex-start',
+        }}>
+          <h3 style={{ fontSize: 20, fontWeight: 800, color: '#4b2e83', marginBottom: 10 }}>📰 Güncel Haberler</h3>
+          {guncelHaberler.map((haber, i) => (
+            <div key={i} style={{ background: '#fff', borderRadius: 10, padding: '10px 12px', boxShadow: '0 1px 4px #e3e3e3', marginBottom: 4 }}>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{haber.title}</div>
+              <div style={{ fontSize: 14, color: '#555' }}>{haber.desc}</div>
+            </div>
+          ))}
         </div>
-        {/* Bilgi Kartları sadece Tarih için */}
-        {selectedCategory.name === 'Tarih' && (
-          <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
-            {/* Dünya ve Türkiye başlıkları yan yana (mobilde alt alta) */}
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Tarihini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {tarihOlaylari.dunya.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
+
+        {/* Orta: Ana İçerik */}
+        <div style={{ flex: 1, minWidth: 340 }}>
+          <button onClick={() => setSelectedCategory(null)} style={{ marginBottom: 24, padding: '8px 18px', borderRadius: 8, border: 'none', background: '#eee', cursor: 'pointer', fontWeight: 600, fontSize: 16 }}>← Kategoriler</button>
+          {/* Bilgi Kartları sadece Tarih için */}
+          {selectedCategory && selectedCategory.name === 'Tarih' && (
+            <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
+              {/* Dünya ve Türkiye başlıkları yan yana (mobilde alt alta) */}
+              <div style={{ flex: 1, minWidth: 260 }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Tarihini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {tarihOlaylari.dunya.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 260 }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Tarihini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {tarihOlaylari.turkiye.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Tarihini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {tarihOlaylari.turkiye.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
+          )}
+          {/* Bilgi Kartları sadece Bilim için */}
+          {selectedCategory && selectedCategory.name === 'Bilim' && (
+            <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
+              <div style={{ flex: 1, minWidth: 260 }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🔬 Dünya Bilimini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {bilimOlaylari.dunya.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 260 }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Bilimini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {bilimOlaylari.turkiye.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {/* Bilgi Kartları sadece Bilim için */}
-        {selectedCategory.name === 'Bilim' && (
-          <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🔬 Dünya Bilimini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {bilimOlaylari.dunya.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
+          )}
+          {/* Bilgi Kartları sadece Spor için */}
+          {selectedCategory && selectedCategory.name === 'Spor' && (
+            <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Sporunu Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {sporOlaylari.dunya.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Sporunu Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {sporOlaylari.turkiye.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Bilimini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {bilimOlaylari.turkiye.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
+          )}
+          {/* Bilgi Kartları sadece Teknoloji için */}
+          {selectedCategory && selectedCategory.name === 'Teknoloji' && (
+            <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Teknolojisini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {teknolojiOlaylari.dunya.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Teknolojisini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {teknolojiOlaylari.turkiye.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {/* Bilgi Kartları sadece Spor için */}
-        {selectedCategory.name === 'Spor' && (
-          <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Sporunu Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {sporOlaylari.dunya.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
+          )}
+          {/* Bilgi Kartları sadece Müzik için */}
+          {selectedCategory && selectedCategory.name === 'Müzik' && (
+            <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Müziğini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {muzikOlaylari.dunya.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Müziğini Değiştiren 5 Olay</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                  {muzikOlaylari.turkiye.map((olay, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
+                      style={{
+                        background: '#fff',
+                        border: `2px solid ${selectedCategory.color}`,
+                        borderRadius: 12,
+                        padding: '14px 18px',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: selectedCategory.color,
+                        boxShadow: '0 2px 8px #e3e3e3',
+                        transition: 'all 0.18s',
+                        textAlign: 'left',
+                        outline: 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        flex: 1,
+                        minHeight: 60
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
+                      onMouseOut={e => e.currentTarget.style.background = '#fff'}
+                    >
+                      <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Sporunu Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {sporOlaylari.turkiye.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Bilgi Kartları sadece Teknoloji için */}
-        {selectedCategory.name === 'Teknoloji' && (
-          <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Teknolojisini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {teknolojiOlaylari.dunya.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Teknolojisini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {teknolojiOlaylari.turkiye.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Bilgi Kartları sadece Müzik için */}
-        {selectedCategory.name === 'Müzik' && (
-          <div style={{ marginBottom: 32, display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'stretch' }}>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🌍 Dünya Müziğini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {muzikOlaylari.dunya.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'dunya' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h2 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 22, marginBottom: 16, textAlign: 'center', letterSpacing: 1 }}>🇹🇷 Türk Müziğini Değiştiren 5 Olay</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                {muzikOlaylari.turkiye.map((olay, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setAcikKart({ ...olay, tip: 'turkiye' })}
-                    style={{
-                      background: '#fff',
-                      border: `2px solid ${selectedCategory.color}`,
-                      borderRadius: 12,
-                      padding: '14px 18px',
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: 'pointer',
-                      color: selectedCategory.color,
-                      boxShadow: '0 2px 8px #e3e3e3',
-                      transition: 'all 0.18s',
-                      textAlign: 'left',
-                      outline: 'none',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      flex: 1,
-                      minHeight: 60
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f4f9ff'}
-                    onMouseOut={e => e.currentTarget.style.background = '#fff'}
-                  >
-                    <span style={{ fontWeight: 800, marginRight: 8, fontSize: 18 }}>•</span> {olay.title.split('(')[0].trim()}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Açık Kart */}
-        {acikKart && (
-          <div
-            style={{
-              background: '#fffbe7',
-              border: `3px solid ${selectedCategory.color}`,
-              borderRadius: 18,
-              padding: 32,
-              marginBottom: 28,
-              boxShadow: '0 4px 24px #f9e79f55',
-              position: 'relative',
-              animation: 'fadeIn 0.5s',
-              maxWidth: 600,
-              margin: '0 auto 28px auto',
-              zIndex: 10,
-            }}
-          >
-            <button
-              onClick={() => setAcikKart(null)}
+          )}
+          {/* Açık Kart */}
+          {acikKart && (
+            <div
               style={{
-                position: 'absolute',
-                top: 14,
-                right: 22,
-                background: selectedCategory.color,
-                color: '#fff',
-                border: 'none',
-                borderRadius: 10,
-                padding: '6px 16px',
-                fontWeight: 700,
-                fontSize: 17,
-                cursor: 'pointer',
-                boxShadow: `0 2px 8px ${selectedCategory.color}33`,
-                letterSpacing: 1
+                background: '#fffbe7',
+                border: `3px solid ${selectedCategory.color}`,
+                borderRadius: 18,
+                padding: 32,
+                marginBottom: 28,
+                boxShadow: '0 4px 24px #f9e79f55',
+                position: 'relative',
+                animation: 'fadeIn 0.5s',
+                maxWidth: 600,
+                margin: '0 auto 28px auto',
+                zIndex: 10,
               }}
             >
-              Kapat ✕
-            </button>
-            <h3 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 24, marginBottom: 16 }}>{acikKart.title}</h3>
-            <div style={{ color: '#222', fontSize: 18, lineHeight: 1.6 }}>{acikKart.desc}</div>
+              <button
+                onClick={() => setAcikKart(null)}
+                style={{
+                  position: 'absolute',
+                  top: 14,
+                  right: 22,
+                  background: selectedCategory.color,
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 10,
+                  padding: '6px 16px',
+                  fontWeight: 700,
+                  fontSize: 17,
+                  cursor: 'pointer',
+                  boxShadow: `0 2px 8px ${selectedCategory.color}33`,
+                  letterSpacing: 1
+                }}
+              >
+                Kapat ✕
+              </button>
+              <h3 style={{ color: selectedCategory.color, fontWeight: 800, fontSize: 24, marginBottom: 16 }}>{acikKart.title}</h3>
+              <div style={{ color: '#222', fontSize: 18, lineHeight: 1.6 }}>{acikKart.desc}</div>
+            </div>
+          )}
+          {/* 3 buton */}
+          <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 18 }}>
+            <button onClick={() => setCategoryScreen('quiz')} style={{ flex: 1, background: '#f39c12', color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: '0 2px 8px rgba(243,156,18,0.10)', transition: 'background 0.2s' }}>Mini Quiz</button>
+            <button onClick={() => setCategoryScreen('chat')} style={{ flex: 1, background: selectedCategory.color, color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: `0 2px 8px ${selectedCategory.color}22`, transition: 'background 0.2s' }}>Sohbet</button>
+            <button onClick={() => setCategoryScreen('qa')} style={{ flex: 1, background: '#27ae60', color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: '0 2px 8px rgba(39,174,96,0.10)', transition: 'background 0.2s' }}>Soru-Cevap</button>
           </div>
-        )}
-        {/* 3 buton */}
-        <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 18 }}>
-          <button onClick={() => setCategoryScreen('quiz')} style={{ flex: 1, background: '#f39c12', color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: '0 2px 8px rgba(243,156,18,0.10)', transition: 'background 0.2s' }}>Mini Quiz</button>
-          <button onClick={() => setCategoryScreen('chat')} style={{ flex: 1, background: selectedCategory.color, color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: `0 2px 8px ${selectedCategory.color}22`, transition: 'background 0.2s' }}>Sohbet</button>
-          <button onClick={() => setCategoryScreen('qa')} style={{ flex: 1, background: '#27ae60', color: '#fff', fontWeight: 700, fontSize: 20, border: 'none', borderRadius: 14, padding: '28px 0', cursor: 'pointer', boxShadow: '0 2px 8px rgba(39,174,96,0.10)', transition: 'background 0.2s' }}>Soru-Cevap</button>
+        </div>
+
+        {/* Sağ: Eğlenceli Bilgiler */}
+        <div style={{
+          width: 260,
+          minWidth: 200,
+          maxHeight: 520,
+          background: 'linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%)',
+          borderRadius: 18,
+          boxShadow: '0 4px 16px rgba(44,62,80,0.08)',
+          padding: '22px 18px',
+          overflowY: 'auto',
+          color: '#333',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 18,
+          marginLeft: 0,
+          marginRight: 0,
+          marginTop: 0,
+          marginBottom: 0,
+          alignSelf: 'flex-start',
+        }}>
+          <h3 style={{ fontSize: 20, fontWeight: 800, color: '#e74c3c', marginBottom: 10 }}>🎉 Eğlenceli Bilgiler</h3>
+          {eglenceliBilgiler.map((bilgi, i) => (
+            <div key={i} style={{ background: '#fff', borderRadius: 10, padding: '10px 12px', boxShadow: '0 1px 4px #e3e3e3', marginBottom: 4, fontSize: 15 }}>
+              {bilgi.fact}
+            </div>
+          ))}
         </div>
       </div>
     );
