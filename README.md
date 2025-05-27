@@ -2,26 +2,6 @@
 
 SohbetAI, yapay zekanın gücünü sohbet deneyimiyle harmanlayan, kullanıcılarına kişiselleştirilmiş bir öğrenme ve etkileşim platformu sunan yenilikçi bir uygulamadır.
 
-## Ekran Görüntüleri
-
-### Ana Sayfa ve Kategoriler
-![Ana Sayfa](screenshots/home.png)
-*Modern ve kullanıcı dostu ana sayfa tasarımı*
-
-![Kategoriler](screenshots/categories.png)
-*Kategori bazlı sohbet odaları ve içerikler*
-
-### Sohbet ve Quiz
-![Sohbet Odası](screenshots/chat.png)
-*Gerçek zamanlı sohbet deneyimi ve yapay zeka asistanı*
-
-![Quiz Sistemi](screenshots/quiz.png)
-*Etkileşimli quiz arayüzü ve anlık geri bildirim*
-
-### Soru-Cevap Sistemi
-![Soru-Cevap Sayfası](screenshots/profile.png)
-*Yapay zeka destekli soru-cevap arayüzü*
-
 ## Yapay Zeka Destekli Kişisel Gelişim
 
 Platformun en dikkat çekici özelliklerinden biri, yapay zeka destekli mini quiz sistemidir. Kullanıcılar çözdükleri her quiz sonrasında, yapay zeka tarafından hazırlanan detaylı bir analiz raporu alırlar. Bu raporda:
@@ -61,6 +41,26 @@ SohbetAI, hem web hem de mobil platformlarda hizmet verir. Modern tasarımı ve 
 - Kişiselleştirilmiş içerik önerileri
 
 sunar. Platform, kullanıcıların hem eğlenmesini hem de öğrenmesini sağlayan, sosyal etkileşim ve yapay zeka teknolojisini mükemmel şekilde harmanlayan bir deneyim sunar.
+
+## Ekran Görüntüleri
+
+### Ana Sayfa ve Kategoriler
+![Ana Sayfa](screenshots/home.png)
+*Modern ve kullanıcı dostu ana sayfa tasarımı*
+
+![Kategoriler](screenshots/categories.png)
+*Kategori bazlı sohbet odaları ve içerikler*
+
+### Sohbet ve Quiz
+![Sohbet Odası](screenshots/chat.png)
+*Gerçek zamanlı sohbet deneyimi ve yapay zeka asistanı*
+
+![Quiz Sistemi](screenshots/quiz.png)
+*Etkileşimli quiz arayüzü ve anlık geri bildirim*
+
+### Soru-Cevap Sistemi
+![Soru-Cevap Sayfası](screenshots/profile.png)
+*Yapay zeka destekli soru-cevap arayüzü*
 
 ## Özellikler
 
